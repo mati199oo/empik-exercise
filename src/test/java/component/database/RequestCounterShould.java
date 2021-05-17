@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,7 +49,10 @@ public class RequestCounterShould {
         requestCounter.incrementLoginCount(login);
 
         // then
-        verify(loginCounterRepository).save(any(LoginCounter.class));
+        LoginCounter loginCounter = new LoginCounter();
+        loginCounter.setLogin(login);
+        loginCounter.setRequestCount(1);
+        verify(loginCounterRepository).save(eq(loginCounter));
     }
 
     private LoginCounter createLoginCounter(String login, int requestCount) {
