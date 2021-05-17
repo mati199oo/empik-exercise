@@ -3,9 +3,10 @@ package component.view.controller;
 import component.service.UserService;
 import component.view.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,8 +20,8 @@ public class UserController {
     }
 
     @GetMapping("users/{login}")
-    public @ResponseBody
-    User getUser(@PathVariable("login") String login) {
-        return userService.getProduct(login);
+    public ResponseEntity<User> getUser(@PathVariable("login") String login) {
+        User user = userService.getUser(login);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
